@@ -118,6 +118,25 @@ redis-cli hset mac:f4:f5:d8:a9:5a:b6 group getflix
 
 (hostname is currently not used for anything)
 
+## Dynamic IP pool
+
+Dynamic IP addresses are allocated from a hash `pool` in the Redis database.  Unused keys should be empty.  One can do a simple bash-script to populate the database with /24:
+
+```
+#!/bin/bash
+
+prefix=172.17.12.
+
+redis-cli del pool
+
+# Dynamic IP pool
+for n in {1..254}; do
+	redis-cli hset pool $prefix$n ""
+done
+```
+
+The dynamic allocation will be added to the Redis database with the MAC address so that the same device will continue to receive the same, dynamically allocated IP address.
+
 ## Packages
 
 This tool is built on top of this package:
