@@ -1,0 +1,12 @@
+[Unit]
+Description=DHCP server
+After=network.target networking.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/dhcp-daemon --id=172.17.2.1
+LimitNOFILE=102400
+LimitNPROC=65535
+
+[Install]
+WantedBy=multi-user.target
